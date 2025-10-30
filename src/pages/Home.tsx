@@ -18,7 +18,7 @@ const Home = () => {
       {/* Hero Section */}
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <img 
-          src={heroImage} 
+          src={welcomeImage} 
           alt="Ureki Beach" 
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -93,7 +93,7 @@ const Home = () => {
             </div>
             <div>
               <img 
-                src={welcomeImage} 
+                src={heroImage} 
                 alt="Cottage exterior" 
                 className="rounded-lg shadow-xl w-full"
               />
