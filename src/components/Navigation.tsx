@@ -3,16 +3,19 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/ureki-logo.png";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSelector from "./LanguageSelector";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
 
   const navItems = [
-    { name: "Home", path: "/" },
-    { name: "Our Cottages", path: "/cottages" },
-    { name: "Gallery", path: "/gallery" },
-    { name: "Contact Us", path: "/contact" },
+    { name: t("nav.home"), path: "/" },
+    { name: t("nav.cottages"), path: "/cottages" },
+    { name: t("nav.gallery"), path: "/gallery" },
+    { name: t("nav.contact"), path: "/contact" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -37,6 +40,7 @@ const Navigation = () => {
                 </Button>
               </Link>
             ))}
+            <LanguageSelector />
           </div>
 
           {/* Mobile menu button */}
@@ -66,6 +70,9 @@ const Navigation = () => {
                 </Button>
               </Link>
             ))}
+            <div className="mt-2">
+              <LanguageSelector />
+            </div>
           </div>
         )}
       </div>
