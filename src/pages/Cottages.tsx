@@ -5,6 +5,12 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import cottageBedroom1 from "@/assets/cottage-bedroom-1.jpg";
+import cottageKitchen from "@/assets/cottage-kitchen.jpg";
+import cottageBathroom from "@/assets/cottage-bathroom.jpg";
+import cottageBedroom2 from "@/assets/cottage-bedroom-2.jpg";
+import cottageBedroom3 from "@/assets/cottage-bedroom-3.jpg";
+import cottagesExterior from "@/assets/cottages-exterior.jpg";
 
 const Cottages = () => {
   const amenities = [
@@ -14,6 +20,15 @@ const Cottages = () => {
     { icon: Wind, label: "Air Conditioning", description: "Stay cool during summer" },
     { icon: Wifi, label: "Wi-Fi Access", description: "Stay connected" },
     { icon: Home, label: "Living Space", description: "Cozy common areas" },
+  ];
+
+  const cottagePhotos = [
+    { src: cottagesExterior, alt: "Cottage exteriors in a row" },
+    { src: cottageBedroom1, alt: "Bedroom with two beds" },
+    { src: cottageBedroom2, alt: "Spacious bedroom area" },
+    { src: cottageBedroom3, alt: "Comfortable sleeping area" },
+    { src: cottageKitchen, alt: "Fully equipped kitchen" },
+    { src: cottageBathroom, alt: "Modern bathroom with shower" },
   ];
 
   return (
@@ -28,6 +43,28 @@ const Cottages = () => {
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                 We offer 7 identical, comfortable cottages perfect for your summer stay
               </p>
+            </div>
+
+            {/* Photo Gallery */}
+            <div className="max-w-6xl mx-auto mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {cottagePhotos.map((photo, index) => (
+                  <div
+                    key={index}
+                    className={`overflow-hidden rounded-lg shadow-md ${
+                      index === 0 ? "md:col-span-2 lg:col-span-3" : ""
+                    }`}
+                  >
+                    <img
+                      src={photo.src}
+                      alt={photo.alt}
+                      className={`w-full object-cover ${
+                        index === 0 ? "h-[400px]" : "h-[300px]"
+                      }`}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="max-w-4xl mx-auto mb-12">
@@ -57,7 +94,8 @@ const Cottages = () => {
                     <p className="text-muted-foreground mb-6">
                       Each cottage is designed for comfort and relaxation, providing everything you need for a perfect 
                       summer vacation. All cottages are well-maintained and offer the same amenities, ensuring every 
-                      guest enjoys the same wonderful experience.
+                      guest enjoys the same wonderful experience. Features include wood-paneled interiors, comfortable 
+                      bedding, a fully equipped kitchen, and a modern bathroom with shower.
                     </p>
                   </div>
 
