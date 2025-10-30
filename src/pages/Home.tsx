@@ -4,8 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Home as HomeIcon, MapPin, Calendar, Image } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import heroImage from "@/assets/hero-beach.jpg";
-import cottageImage from "@/assets/cottage-1.jpg";
+import heroImage from "@/assets/home-hero.jpg";
+import welcomeImage from "@/assets/home-welcome.jpg";
 
 const Home = () => {
   return (
@@ -94,7 +94,7 @@ const Home = () => {
             </div>
             <div>
               <img 
-                src={cottageImage} 
+                src={welcomeImage} 
                 alt="Cottage exterior" 
                 className="rounded-lg shadow-xl w-full"
               />
