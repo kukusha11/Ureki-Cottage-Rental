@@ -1,78 +1,21 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Bed, Home } from "lucide-react";
+import { Users, Bed, Home, Wifi, Wind, Utensils, Droplets } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import cottage1 from "@/assets/cottage-1.jpg";
-import cottageInterior from "@/assets/cottage-interior.jpg";
-
-const cottagesData = [
-  {
-    id: 1,
-    name: "Cottage 1 - Sunrise",
-    capacity: 4,
-    bedrooms: 2,
-    description: "Cozy cottage perfect for families, featuring a spacious living area and private patio.",
-    amenities: ["Kitchen", "Bathroom", "Air Conditioning", "Wi-Fi", "Patio"],
-    image: cottage1,
-  },
-  {
-    id: 2,
-    name: "Cottage 2 - Sunshine",
-    capacity: 6,
-    bedrooms: 3,
-    description: "Our largest cottage, ideal for bigger groups or extended families.",
-    amenities: ["Kitchen", "2 Bathrooms", "Air Conditioning", "Wi-Fi", "Garden View"],
-    image: cottageInterior,
-  },
-  {
-    id: 3,
-    name: "Cottage 3 - Seabreeze",
-    capacity: 4,
-    bedrooms: 2,
-    description: "Charming cottage with ocean views and a relaxing atmosphere.",
-    amenities: ["Kitchen", "Bathroom", "Air Conditioning", "Wi-Fi", "Balcony"],
-    image: cottage1,
-  },
-  {
-    id: 4,
-    name: "Cottage 4 - Sandcastle",
-    capacity: 2,
-    bedrooms: 1,
-    description: "Perfect for couples seeking a romantic beach getaway.",
-    amenities: ["Kitchenette", "Bathroom", "Air Conditioning", "Wi-Fi"],
-    image: cottageInterior,
-  },
-  {
-    id: 5,
-    name: "Cottage 5 - Wavecrest",
-    capacity: 4,
-    bedrooms: 2,
-    description: "Modern cottage with all the comforts of home near the beach.",
-    amenities: ["Kitchen", "Bathroom", "Air Conditioning", "Wi-Fi", "Patio"],
-    image: cottage1,
-  },
-  {
-    id: 6,
-    name: "Cottage 6 - Starfish",
-    capacity: 4,
-    bedrooms: 2,
-    description: "Family-friendly cottage with a cozy interior and outdoor space.",
-    amenities: ["Kitchen", "Bathroom", "Air Conditioning", "Wi-Fi", "Garden"],
-    image: cottageInterior,
-  },
-  {
-    id: 7,
-    name: "Cottage 7 - Beachcomber",
-    capacity: 5,
-    bedrooms: 2,
-    description: "Spacious cottage great for families or small groups.",
-    amenities: ["Kitchen", "Bathroom", "Air Conditioning", "Wi-Fi", "Terrace"],
-    image: cottage1,
-  },
-];
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Cottages = () => {
+  const amenities = [
+    { icon: Bed, label: "Comfortable Beds", description: "Quality bedding for restful sleep" },
+    { icon: Utensils, label: "Full Kitchen", description: "Equipped with all essentials" },
+    { icon: Droplets, label: "Private Bathroom", description: "Clean and modern facilities" },
+    { icon: Wind, label: "Air Conditioning", description: "Stay cool during summer" },
+    { icon: Wifi, label: "Wi-Fi Access", description: "Stay connected" },
+    { icon: Home, label: "Living Space", description: "Cozy common areas" },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
@@ -83,50 +26,79 @@ const Cottages = () => {
             <div className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Cottages</h1>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Choose from our 7 charming cottages, each designed to provide comfort 
-                and relaxation during your summer stay
+                We offer 7 identical, comfortable cottages perfect for your summer stay
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {cottagesData.map((cottage) => (
-                <Card key={cottage.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <img 
-                    src={cottage.image} 
-                    alt={cottage.name}
-                    className="w-full h-48 object-cover"
-                  />
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      <span>{cottage.name}</span>
-                      <Home className="text-primary" size={20} />
-                    </CardTitle>
-                    <CardDescription>{cottage.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex gap-4 mb-4">
-                      <Badge variant="secondary" className="flex items-center gap-1">
-                        <Users size={14} />
-                        <span>Up to {cottage.capacity}</span>
-                      </Badge>
-                      <Badge variant="outline" className="flex items-center gap-1">
-                        <Bed size={14} />
-                        <span>{cottage.bedrooms} Bedroom{cottage.bedrooms > 1 ? 's' : ''}</span>
-                      </Badge>
+            <div className="max-w-4xl mx-auto mb-12">
+              <Card className="overflow-hidden">
+                <CardHeader className="bg-primary/5">
+                  <CardTitle className="flex items-center justify-between text-2xl">
+                    <span>Summer Cottage</span>
+                    <Home className="text-primary" size={28} />
+                  </CardTitle>
+                  <CardDescription className="text-base">
+                    Each of our 7 cottages offers the same high-quality experience with identical amenities and comfort
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="pt-6">
+                  <div className="flex gap-4 mb-6">
+                    <Badge variant="secondary" className="flex items-center gap-1 text-base py-2 px-4">
+                      <Users size={18} />
+                      <span>Up to 4 guests</span>
+                    </Badge>
+                    <Badge variant="outline" className="flex items-center gap-1 text-base py-2 px-4">
+                      <Bed size={18} />
+                      <span>2 Bedrooms</span>
+                    </Badge>
+                  </div>
+
+                  <div className="mb-8">
+                    <p className="text-muted-foreground mb-6">
+                      Each cottage is designed for comfort and relaxation, providing everything you need for a perfect 
+                      summer vacation. All cottages are well-maintained and offer the same amenities, ensuring every 
+                      guest enjoys the same wonderful experience.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="font-bold text-xl mb-4">Amenities & Features</h3>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {amenities.map((amenity, index) => {
+                        const Icon = amenity.icon;
+                        return (
+                          <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-sand/20">
+                            <Icon className="text-primary mt-1 flex-shrink-0" size={24} />
+                            <div>
+                              <p className="font-semibold">{amenity.label}</p>
+                              <p className="text-sm text-muted-foreground">{amenity.description}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                    <div>
-                      <p className="font-semibold mb-2 text-sm">Amenities:</p>
-                      <div className="flex flex-wrap gap-2">
-                        {cottage.amenities.map((amenity, index) => (
-                          <Badge key={index} variant="outline" className="text-xs">
-                            {amenity}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="text-center bg-primary text-primary-foreground rounded-lg p-8">
+              <h2 className="text-3xl font-bold mb-4">Ready to Book?</h2>
+              <p className="text-xl mb-6 opacity-90">
+                All 7 cottages offer the same great experience. Contact us to check availability!
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center">
+                <Link to="/availability">
+                  <Button size="lg" variant="secondary">
+                    Check Availability
+                  </Button>
+                </Link>
+                <Link to="/contact">
+                  <Button size="lg" variant="outline" className="bg-transparent border-2 hover:bg-primary-foreground/10">
+                    Contact Us
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </section>

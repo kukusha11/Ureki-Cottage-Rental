@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -173,8 +173,17 @@ const Contact = () => {
                       <Phone className="text-primary mt-1" size={24} />
                       <div>
                         <h3 className="font-semibold mb-1">Call Us</h3>
-                        <a href="tel:+995XXXXXXXXX" className="text-muted-foreground hover:text-primary">
-                          +995 XXX XXX XXX
+                        <a href="tel:+995599110997" className="text-muted-foreground hover:text-primary block mb-2">
+                          +995 599 110 997
+                        </a>
+                        <a 
+                          href="https://wa.me/995599110997" 
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-sm text-green-600 hover:text-green-700 font-medium"
+                        >
+                          <MessageCircle size={16} />
+                          <span>Message on WhatsApp</span>
                         </a>
                       </div>
                     </div>
@@ -202,8 +211,9 @@ const Contact = () => {
                       <div>
                         <h3 className="font-semibold mb-1">Visit Us</h3>
                         <p className="text-muted-foreground">
-                          Ureki Beach<br />
-                          Ureki, Georgia
+                          ექვთიმე თაყაიშვილი 155<br />
+                          ურეკი, Ureki<br />
+                          Georgia
                         </p>
                       </div>
                     </div>
@@ -212,14 +222,14 @@ const Contact = () => {
 
                 <div className="rounded-lg overflow-hidden shadow-md h-[300px]">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23767.42891234567!2d41.9876543!3d41.9876543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDU5JzE1LjYiTiA0McKwNTknMTUuNiJF!5e0!3m2!1sen!2sge!4v1234567890"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2960.856544721234!2d41.98765!3d41.99876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDU5JzU1LjUiTiA0MsKwMDAnMDMuNiJF!5e0!3m2!1sen!2sge!4v1234567890"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Ureki Beach Location"
+                    title="Ureki Beach Location - ექვთიმე თაყაიშვილი 155, Ureki"
                   ></iframe>
                 </div>
               </div>

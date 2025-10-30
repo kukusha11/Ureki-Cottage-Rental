@@ -1,21 +1,23 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import cottage1 from "@/assets/cottage-1.jpg";
-import cottageInterior from "@/assets/cottage-interior.jpg";
-import beachScene from "@/assets/beach-scene.jpg";
-import heroImage from "@/assets/hero-beach.jpg";
+import gallery1 from "@/assets/gallery-1.jpg";
+import gallery2 from "@/assets/gallery-2.jpg";
+import gallery3 from "@/assets/gallery-3.jpg";
+import gallery4 from "@/assets/gallery-4.jpg";
+import gallery5 from "@/assets/gallery-5.jpg";
+import gallery6 from "@/assets/gallery-6.jpg";
+import gallery7 from "@/assets/gallery-7.jpg";
 import { Image as ImageIcon } from "lucide-react";
 
 const Gallery = () => {
   const galleryImages = [
-    { src: heroImage, alt: "Ureki Beach coastline", category: "Beach" },
-    { src: cottage1, alt: "Cottage exterior", category: "Cottages" },
-    { src: cottageInterior, alt: "Cottage interior bedroom", category: "Interiors" },
-    { src: beachScene, alt: "Black sand beach", category: "Beach" },
-    { src: cottage1, alt: "Another cottage view", category: "Cottages" },
-    { src: cottageInterior, alt: "Living area", category: "Interiors" },
-    { src: beachScene, alt: "Beach umbrellas", category: "Beach" },
-    { src: heroImage, alt: "Sunset at Ureki", category: "Beach" },
+    { src: gallery1, alt: "Beachside terrace with ocean view", category: "Facilities" },
+    { src: gallery2, alt: "Ureki Beach welcome sign", category: "Property" },
+    { src: gallery3, alt: "Property grounds with cottages", category: "Cottages" },
+    { src: gallery4, alt: "Beach view from property", category: "Beach" },
+    { src: gallery5, alt: "Hammocks and relaxation area", category: "Facilities" },
+    { src: gallery6, alt: "Garden decorations", category: "Property" },
+    { src: gallery7, alt: "Property entrance and parking", category: "Property" },
   ];
 
   return (
@@ -29,7 +31,7 @@ const Gallery = () => {
               <ImageIcon className="w-16 h-16 mx-auto mb-4 text-primary" />
               <h1 className="text-4xl md:text-5xl font-bold mb-4">Gallery</h1>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Take a visual tour of our cottages and the beautiful Ureki beach
+                Take a visual tour of our property and the beautiful Ureki beach
               </p>
             </div>
 

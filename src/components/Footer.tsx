@@ -1,4 +1,4 @@
-import { Instagram, Mail, Phone } from "lucide-react";
+import { Instagram, Mail, Phone, MessageCircle } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -15,9 +15,18 @@ const Footer = () => {
           <div>
             <h3 className="font-bold text-lg mb-4">Contact</h3>
             <div className="space-y-2 text-sm">
-              <a href="tel:+995XXXXXXXXX" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <a href="tel:+995599110997" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                 <Phone size={16} />
-                <span>+995 XXX XXX XXX</span>
+                <span>+995 599 110 997</span>
+              </a>
+              <a 
+                href="https://wa.me/995599110997" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+              >
+                <MessageCircle size={16} />
+                <span>WhatsApp</span>
               </a>
               <a href="mailto:info@urekibeach.ge" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                 <Mail size={16} />
