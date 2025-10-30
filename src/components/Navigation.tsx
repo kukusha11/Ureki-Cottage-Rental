@@ -11,7 +11,6 @@ const Navigation = () => {
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Our Cottages", path: "/cottages" },
-    { name: "Availability", path: "/availability" },
     { name: "Gallery", path: "/gallery" },
     { name: "Contact Us", path: "/contact" },
   ];

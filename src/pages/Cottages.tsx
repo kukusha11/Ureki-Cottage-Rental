@@ -126,9 +126,9 @@ const Cottages = () => {
                 All 7 cottages offer the same great experience. Contact us to check availability!
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
-                <Link to="/availability">
+                <Link to="/contact">
                   <Button size="lg" variant="secondary">
-                    Check Availability
+                    Book Your Stay
                   </Button>
                 </Link>
                 <Link to="/contact">

@@ -113,9 +113,9 @@ const Home = () => {
             Check our availability and book your perfect summer getaway today
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Link to="/availability">
+            <Link to="/contact">
               <Button size="lg" variant="secondary">
-                Check Availability
+                Book Your Stay
               </Button>
             </Link>
             <Link to="/contact">
