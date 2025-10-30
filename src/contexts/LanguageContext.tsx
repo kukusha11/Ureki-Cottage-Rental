@@ -40,6 +40,18 @@ const translations = {
     "home.cta.book": "Book Your Stay",
     "home.cta.contact": "Contact Us",
     
+    "home.reviews.title": "What Our Guests Say",
+    "home.reviews.rating": "Rating on Booking.com",
+    "home.reviews.testimonial1.text": "Amazing location right by the beach! The cottage was clean, comfortable and had everything we needed. The magnetic black sand beach is truly special.",
+    "home.reviews.testimonial1.author": "Sarah M.",
+    "home.reviews.testimonial1.location": "Germany",
+    "home.reviews.testimonial2.text": "Perfect family vacation! The kids loved the beach and the cottage was spacious enough for all of us. Great hospitality from the owners.",
+    "home.reviews.testimonial2.author": "Giorgi K.",
+    "home.reviews.testimonial2.location": "Tbilisi, Georgia",
+    "home.reviews.testimonial3.text": "Best summer holiday we've had! The peaceful atmosphere and the healing properties of the beach made our stay unforgettable.",
+    "home.reviews.testimonial3.author": "Elena P.",
+    "home.reviews.testimonial3.location": "Russia",
+    
     // Cottages Page
     "cottages.title": "Our Cottages",
     "cottages.subtitle": "We offer 7 identical, comfortable cottages perfect for your summer stay",
@@ -123,6 +135,18 @@ const translations = {
     "home.cta.book": "დაჯავშნეთ ახლავე",
     "home.cta.contact": "დაგვიკავშირდით",
     
+    "home.reviews.title": "რას ამბობენ ჩვენი სტუმრები",
+    "home.reviews.rating": "რეიტინგი Booking.com-ზე",
+    "home.reviews.testimonial1.text": "შესანიშნავი ლოკაცია პლაჟთან! კოტეჯი სუფთა, კომფორტული და ყველაფერი იყო რაც გვჭირდებოდა. მაგნიტური შავი ქვიშის პლაჟი ნამდვილად განსაკუთრებულია.",
+    "home.reviews.testimonial1.author": "სარა მ.",
+    "home.reviews.testimonial1.location": "გერმანია",
+    "home.reviews.testimonial2.text": "შესანიშნავი ოჯახური დასვენება! ბავშვებს ძალიან მოეწონათ პლაჟი და კოტეჯი საკმარისად ფართო იყო ჩვენი ოჯახისთვის. მშვენიერი მასპინძლობა მესაკუთრეებისგან.",
+    "home.reviews.testimonial2.author": "გიორგი კ.",
+    "home.reviews.testimonial2.location": "თბილისი, საქართველო",
+    "home.reviews.testimonial3.text": "საუკეთესო ზაფხულის არდადეგები რაც გვქონია! მშვიდი ატმოსფერო და პლაჟის სამკურნალო თვისებები ჩვენს ყოფნას დაუვიწყარს ხდიდა.",
+    "home.reviews.testimonial3.author": "ელენა პ.",
+    "home.reviews.testimonial3.location": "რუსეთი",
+    
     // Cottages Page
     "cottages.title": "ჩვენი კოტეჯები",
     "cottages.subtitle": "ჩვენ გთავაზობთ 7 იდენტურ, კომფორტულ კოტეჯს თქვენი ზაფხულის დასვენებისთვის",
@@ -205,6 +229,18 @@ const translations = {
     "home.cta.subtitle": "Проверьте наличие мест и забронируйте свой идеальный летний отдых сегодня",
     "home.cta.book": "Забронировать",
     "home.cta.contact": "Связаться с нами",
+    
+    "home.reviews.title": "Отзывы наших гостей",
+    "home.reviews.rating": "Рейтинг на Booking.com",
+    "home.reviews.testimonial1.text": "Потрясающее расположение прямо у пляжа! Коттедж был чистым, комфортным и имел все необходимое. Пляж с магнитным черным песком действительно особенный.",
+    "home.reviews.testimonial1.author": "Сара М.",
+    "home.reviews.testimonial1.location": "Германия",
+    "home.reviews.testimonial2.text": "Идеальный семейный отпуск! Детям очень понравился пляж, а коттедж был достаточно просторным для всех нас. Отличное гостеприимство от владельцев.",
+    "home.reviews.testimonial2.author": "Гиорги К.",
+    "home.reviews.testimonial2.location": "Тбилиси, Грузия",
+    "home.reviews.testimonial3.text": "Лучший летний отдых, который у нас был! Спокойная атмосфера и целебные свойства пляжа сделали наше пребывание незабываемым.",
+    "home.reviews.testimonial3.author": "Елена П.",
+    "home.reviews.testimonial3.location": "Россия",
     
     // Cottages Page
     "cottages.title": "Наши коттеджи",
