@@ -57,10 +57,6 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        sand: "hsl(var(--sand))",
-        ocean: "hsl(var(--ocean))",
-        sunshine: "hsl(var(--sunshine))",
-        wood: "hsl(var(--wood))",
       },
       borderRadius: {
         lg: "var(--radius)",
