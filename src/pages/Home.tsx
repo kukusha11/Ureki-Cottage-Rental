@@ -6,8 +6,11 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import heroImage from "@/assets/home-hero.jpg";
 import welcomeImage from "@/assets/home-welcome.jpg";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Home = () => {
+  const { t } = useLanguage();
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
@@ -22,14 +25,14 @@ const Home = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/60 to-primary/30" />
         <div className="relative z-10 text-center text-white px-4">
           <h1 className="text-5xl md:text-6xl font-bold mb-4 drop-shadow-lg">
-            Your Summer Home by the Black Sand
+            {t("home.hero.title")}
           </h1>
           <p className="text-xl md:text-2xl mb-8 drop-shadow-md">
-            Cozy cottages steps away from Ureki's magnetic beaches
+            {t("home.hero.subtitle")}
           </p>
           <Link to="/contact">
             <Button size="lg" variant="secondary" className="text-lg px-8">
-              Book Your Stay
+              {t("home.hero.cta")}
             </Button>
           </Link>
         </div>
@@ -42,9 +45,9 @@ const Home = () => {
             <Card>
               <CardContent className="pt-6 text-center">
                 <HomeIcon className="w-12 h-12 mx-auto mb-4 text-primary" />
-                <h3 className="font-bold text-xl mb-2">7 Cozy Cottages</h3>
+                <h3 className="font-bold text-xl mb-2">{t("home.info.cottages.title")}</h3>
                 <p className="text-muted-foreground">
-                  Perfect for families, couples, and groups
+                  {t("home.info.cottages.desc")}
                 </p>
               </CardContent>
             </Card>
@@ -52,9 +55,9 @@ const Home = () => {
             <Card>
               <CardContent className="pt-6 text-center">
                 <Calendar className="w-12 h-12 mx-auto mb-4 text-accent" />
-                <h3 className="font-bold text-xl mb-2">Summer Season</h3>
+                <h3 className="font-bold text-xl mb-2">{t("home.info.season.title")}</h3>
                 <p className="text-muted-foreground">
-                  Available June through August
+                  {t("home.info.season.desc")}
                 </p>
               </CardContent>
             </Card>
@@ -62,9 +65,9 @@ const Home = () => {
             <Card>
               <CardContent className="pt-6 text-center">
                 <MapPin className="w-12 h-12 mx-auto mb-4 text-primary" />
-                <h3 className="font-bold text-xl mb-2">Prime Location</h3>
+                <h3 className="font-bold text-xl mb-2">{t("home.info.location.title")}</h3>
                 <p className="text-muted-foreground">
-                  Steps away from the black sand beach
+                  {t("home.info.location.desc")}
                 </p>
               </CardContent>
             </Card>
@@ -77,19 +80,15 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold mb-6">Welcome to Ureki Beach</h2>
+              <h2 className="text-4xl font-bold mb-6">{t("home.about.title")}</h2>
               <p className="text-lg text-muted-foreground mb-4">
-                Our family-run business offers 7 charming cottages in the heart of Ureki, 
-                Georgia's famous magnetic black sand beach resort. Each cottage is designed 
-                for comfort and relaxation, making your summer vacation unforgettable.
+                {t("home.about.p1")}
               </p>
               <p className="text-lg text-muted-foreground mb-6">
-                Whether you're seeking a peaceful retreat or a fun-filled family vacation, 
-                our cottages provide the perfect home base for exploring the unique beauty 
-                of Ureki's healing black sand beaches.
+                {t("home.about.p2")}
               </p>
               <Link to="/cottages">
-                <Button size="lg">Explore Our Cottages</Button>
+                <Button size="lg">{t("home.about.cta")}</Button>
               </Link>
             </div>
             <div>
@@ -107,20 +106,20 @@ const Home = () => {
       <section className="py-16 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Experience Ureki?
+            {t("home.cta.title")}
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Check our availability and book your perfect summer getaway today
+            {t("home.cta.subtitle")}
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link to="/contact">
               <Button size="lg" variant="secondary">
-                Book Your Stay
+                {t("home.cta.book")}
               </Button>
             </Link>
             <Link to="/contact">
               <Button size="lg" variant="outline" className="bg-transparent border-2 hover:bg-primary-foreground/10">
-                Contact Us
+                {t("home.cta.contact")}
               </Button>
             </Link>
           </div>

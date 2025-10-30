@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100),
@@ -22,6 +23,7 @@ const formSchema = z.object({
 
 const Contact = () => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,19 +52,19 @@ const Contact = () => {
       <main className="flex-grow">
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Ready to book your summer getaway? Get in touch with us!
-              </p>
-            </div>
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">{t("contact.title")}</h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              {t("contact.subtitle")}
+            </p>
+          </div>
 
             <div className="grid md:grid-cols-2 gap-8 mb-12">
               <Card>
                 <CardHeader>
-                  <CardTitle>Send us a message</CardTitle>
+                  <CardTitle>{t("contact.form.title")}</CardTitle>
                   <CardDescription>
-                    Fill out the form and we'll respond within 24 hours
+                    {t("contact.form.desc")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -73,9 +75,9 @@ const Contact = () => {
                         name="name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Name *</FormLabel>
+                            <FormLabel>{t("contact.form.name")} *</FormLabel>
                             <FormControl>
-                              <Input placeholder="Your name" {...field} />
+                              <Input placeholder={t("contact.form.name")} {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -87,7 +89,7 @@ const Contact = () => {
                         name="phone"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Phone *</FormLabel>
+                            <FormLabel>{t("contact.form.phone")} *</FormLabel>
                             <FormControl>
                               <Input placeholder="+995 XXX XXX XXX" {...field} />
                             </FormControl>
@@ -101,7 +103,7 @@ const Contact = () => {
                         name="email"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Email *</FormLabel>
+                            <FormLabel>{t("contact.form.email")} *</FormLabel>
                             <FormControl>
                               <Input type="email" placeholder="your@email.com" {...field} />
                             </FormControl>
@@ -116,7 +118,7 @@ const Contact = () => {
                           name="checkIn"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Check-in *</FormLabel>
+                              <FormLabel>{t("contact.form.checkin")} *</FormLabel>
                               <FormControl>
                                 <Input type="date" {...field} />
                               </FormControl>
@@ -130,7 +132,7 @@ const Contact = () => {
                           name="checkOut"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Check-out *</FormLabel>
+                              <FormLabel>{t("contact.form.checkout")} *</FormLabel>
                               <FormControl>
                                 <Input type="date" {...field} />
                               </FormControl>
@@ -145,10 +147,10 @@ const Contact = () => {
                         name="message"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Message (Optional)</FormLabel>
+                            <FormLabel>{t("contact.form.message")}</FormLabel>
                             <FormControl>
                               <Textarea 
-                                placeholder="Tell us about your plans..."
+                                placeholder={t("contact.form.message.placeholder")}
                                 className="min-h-[100px]"
                                 {...field}
                               />
@@ -159,7 +161,7 @@ const Contact = () => {
                       />
 
                       <Button type="submit" size="lg" className="w-full">
-                        Send Message
+                        {t("contact.form.submit")}
                       </Button>
                     </form>
                   </Form>
@@ -172,7 +174,7 @@ const Contact = () => {
                     <div className="flex items-start gap-4">
                       <Phone className="text-primary mt-1" size={24} />
                       <div>
-                        <h3 className="font-semibold mb-1">Call Us</h3>
+                        <h3 className="font-semibold mb-1">{t("contact.call")}</h3>
                         <a href="tel:+995599110997" className="text-muted-foreground hover:text-primary block mb-2">
                           +995 599 110 997
                         </a>
@@ -183,7 +185,7 @@ const Contact = () => {
                           className="inline-flex items-center gap-2 text-sm text-green-600 hover:text-green-700 font-medium"
                         >
                           <MessageCircle size={16} />
-                          <span>Message on WhatsApp</span>
+                          <span>{t("contact.whatsapp")}</span>
                         </a>
                       </div>
                     </div>
@@ -195,7 +197,7 @@ const Contact = () => {
                     <div className="flex items-start gap-4">
                       <Mail className="text-primary mt-1" size={24} />
                       <div>
-                        <h3 className="font-semibold mb-1">Email Us</h3>
+                        <h3 className="font-semibold mb-1">{t("contact.email")}</h3>
                         <a href="mailto:info@urekibeach.ge" className="text-muted-foreground hover:text-primary">
                           info@urekibeach.ge
                         </a>
@@ -209,7 +211,7 @@ const Contact = () => {
                     <div className="flex items-start gap-4">
                       <MapPin className="text-primary mt-1" size={24} />
                       <div>
-                        <h3 className="font-semibold mb-1">Visit Us</h3>
+                        <h3 className="font-semibold mb-1">{t("contact.visit")}</h3>
                         <p className="text-muted-foreground">
                           ექვთიმე თაყაიშვილი 155<br />
                           ურეკი, Ureki<br />

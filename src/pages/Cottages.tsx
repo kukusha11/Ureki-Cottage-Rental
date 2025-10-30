@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 import cottageBedroom1 from "@/assets/cottage-bedroom-1.jpg";
 import cottageKitchen from "@/assets/cottage-kitchen.jpg";
 import cottageBathroom from "@/assets/cottage-bathroom.jpg";
@@ -13,13 +14,15 @@ import cottageBedroom3 from "@/assets/cottage-bedroom-3.jpg";
 import cottagesExterior from "@/assets/cottages-exterior.jpg";
 
 const Cottages = () => {
+  const { t } = useLanguage();
+  
   const amenities = [
-    { icon: Bed, label: "Comfortable Beds", description: "Quality bedding for restful sleep" },
-    { icon: Utensils, label: "Full Kitchen", description: "Equipped with all essentials" },
-    { icon: Droplets, label: "Private Bathroom", description: "Clean and modern facilities" },
-    { icon: Wind, label: "Air Conditioning", description: "Stay cool during summer" },
-    { icon: Wifi, label: "Wi-Fi Access", description: "Stay connected" },
-    { icon: Home, label: "Living Space", description: "Cozy common areas" },
+    { icon: Bed, labelKey: "cottages.amenity.beds", descKey: "cottages.amenity.beds.desc" },
+    { icon: Utensils, labelKey: "cottages.amenity.kitchen", descKey: "cottages.amenity.kitchen.desc" },
+    { icon: Droplets, labelKey: "cottages.amenity.bathroom", descKey: "cottages.amenity.bathroom.desc" },
+    { icon: Wind, labelKey: "cottages.amenity.ac", descKey: "cottages.amenity.ac.desc" },
+    { icon: Wifi, labelKey: "cottages.amenity.wifi", descKey: "cottages.amenity.wifi.desc" },
+    { icon: Home, labelKey: "cottages.amenity.living", descKey: "cottages.amenity.living.desc" },
   ];
 
   const cottagePhotos = [
@@ -38,12 +41,12 @@ const Cottages = () => {
       <main className="flex-grow">
         <section className="py-16 bg-sand/20">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Cottages</h1>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                We offer 7 identical, comfortable cottages perfect for your summer stay
-              </p>
-            </div>
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">{t("cottages.title")}</h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              {t("cottages.subtitle")}
+            </p>
+          </div>
 
             {/* Photo Gallery */}
             <div className="max-w-6xl mx-auto mb-12">
@@ -71,36 +74,33 @@ const Cottages = () => {
               <Card className="overflow-hidden">
                 <CardHeader className="bg-primary/5">
                   <CardTitle className="flex items-center justify-between text-2xl">
-                    <span>Summer Cottage</span>
+                    <span>{t("cottages.card.title")}</span>
                     <Home className="text-primary" size={28} />
                   </CardTitle>
                   <CardDescription className="text-base">
-                    Each of our 7 cottages offers the same high-quality experience with identical amenities and comfort
+                    {t("cottages.card.desc")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
                   <div className="flex gap-4 mb-6">
                     <Badge variant="secondary" className="flex items-center gap-1 text-base py-2 px-4">
                       <Users size={18} />
-                      <span>Up to 4 guests</span>
+                      <span>{t("cottages.guests")}</span>
                     </Badge>
                     <Badge variant="outline" className="flex items-center gap-1 text-base py-2 px-4">
                       <Bed size={18} />
-                      <span>2 Bedrooms</span>
+                      <span>{t("cottages.bedrooms")}</span>
                     </Badge>
                   </div>
 
                   <div className="mb-8">
                     <p className="text-muted-foreground mb-6">
-                      Each cottage is designed for comfort and relaxation, providing everything you need for a perfect 
-                      summer vacation. All cottages are well-maintained and offer the same amenities, ensuring every 
-                      guest enjoys the same wonderful experience. Features include wood-paneled interiors, comfortable 
-                      bedding, a fully equipped kitchen, and a modern bathroom with shower.
+                      {t("cottages.description")}
                     </p>
                   </div>
 
                   <div>
-                    <h3 className="font-bold text-xl mb-4">Amenities & Features</h3>
+                    <h3 className="font-bold text-xl mb-4">{t("cottages.amenities.title")}</h3>
                     <div className="grid md:grid-cols-2 gap-4">
                       {amenities.map((amenity, index) => {
                         const Icon = amenity.icon;
@@ -108,8 +108,8 @@ const Cottages = () => {
                           <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-sand/20">
                             <Icon className="text-primary mt-1 flex-shrink-0" size={24} />
                             <div>
-                              <p className="font-semibold">{amenity.label}</p>
-                              <p className="text-sm text-muted-foreground">{amenity.description}</p>
+                              <p className="font-semibold">{t(amenity.labelKey)}</p>
+                              <p className="text-sm text-muted-foreground">{t(amenity.descKey)}</p>
                             </div>
                           </div>
                         );
@@ -121,19 +121,19 @@ const Cottages = () => {
             </div>
 
             <div className="text-center bg-primary text-primary-foreground rounded-lg p-8">
-              <h2 className="text-3xl font-bold mb-4">Ready to Book?</h2>
+              <h2 className="text-3xl font-bold mb-4">{t("cottages.cta.title")}</h2>
               <p className="text-xl mb-6 opacity-90">
-                All 7 cottages offer the same great experience. Contact us to check availability!
+                {t("cottages.cta.subtitle")}
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <Link to="/contact">
                   <Button size="lg" variant="secondary">
-                    Book Your Stay
+                    {t("home.cta.book")}
                   </Button>
                 </Link>
                 <Link to="/contact">
                   <Button size="lg" variant="outline" className="bg-transparent border-2 hover:bg-primary-foreground/10">
-                    Contact Us
+                    {t("home.cta.contact")}
                   </Button>
                 </Link>
               </div>
