@@ -14,16 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      booking_com_settings: {
+        Row: {
+          created_at: string
+          ical_url: string
+          id: string
+          last_synced_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          ical_url: string
+          id?: string
+          last_synced_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          ical_url?: string
+          id?: string
+          last_synced_at?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       reservations: {
         Row: {
           check_in: string
           check_out: string
           cottage_number: number
           created_at: string
+          external_uid: string | null
           guest_name: string
           guest_phone: string | null
           id: string
           notes: string | null
+          source: string
           updated_at: string
         }
         Insert: {
@@ -31,10 +57,12 @@ export type Database = {
           check_out: string
           cottage_number: number
           created_at?: string
+          external_uid?: string | null
           guest_name: string
           guest_phone?: string | null
           id?: string
           notes?: string | null
+          source?: string
           updated_at?: string
         }
         Update: {
@@ -42,10 +70,12 @@ export type Database = {
           check_out?: string
           cottage_number?: number
           created_at?: string
+          external_uid?: string | null
           guest_name?: string
           guest_phone?: string | null
           id?: string
           notes?: string | null
+          source?: string
           updated_at?: string
         }
         Relationships: []
