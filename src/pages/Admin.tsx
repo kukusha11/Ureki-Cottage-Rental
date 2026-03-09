@@ -403,34 +403,6 @@ const Admin = () => {
               </CardContent>
             </Card>
 
-            {/* Export iCal URLs */}
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base flex items-center gap-2">
-                  <LinkIcon size={16} className="text-primary" />
-                  Export iCal URLs
-                </CardTitle>
-                <CardDescription>Use these URLs to sync your reservations to Booking.com or Google Calendar</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium w-24">All cottages:</span>
-                  <code className="text-xs bg-muted px-2 py-1 rounded flex-1 break-all truncate">{icalBaseUrl}</code>
-                  <Button variant="ghost" size="icon" onClick={() => copyToClipboard(icalBaseUrl, "Combined URL")}>
-                    <Copy size={14} />
-                  </Button>
-                </div>
-                {[1, 2, 3, 4, 5, 6, 7].map((n) => (
-                  <div key={n} className="flex items-center gap-2">
-                    <span className="text-sm font-medium w-24">Cottage {n}:</span>
-                    <code className="text-xs bg-muted px-2 py-1 rounded flex-1 break-all truncate">{icalBaseUrl}?cottage={n}</code>
-                    <Button variant="ghost" size="icon" onClick={() => copyToClipboard(`${icalBaseUrl}?cottage=${n}`, `Cottage ${n} URL`)}>
-                      <Copy size={14} />
-                    </Button>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
           </div>
         )}
 
