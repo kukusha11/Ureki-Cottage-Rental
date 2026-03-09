@@ -397,6 +397,42 @@ const Admin = () => {
               </CardContent>
             </Card>
 
+            {/* iCal Export */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base flex items-center gap-2">
+                  <Calendar size={16} className="text-primary" />
+                  iCal Export (→ Booking.com)
+                </CardTitle>
+                <CardDescription>
+                  Paste this URL into Booking.com → Calendar → Add a calendar connection to export your manual reservations
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex gap-2">
+                  <Input
+                    readOnly
+                    value={`https://${import.meta.env.VITE_SUPABASE_PROJECT_ID || 'fhbytiijiiprnhfnlqcj'}.supabase.co/functions/v1/ical-feed`}
+                    className="flex-1 text-xs"
+                  />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID || 'fhbytiijiiprnhfnlqcj'}.supabase.co/functions/v1/ical-feed`
+                      );
+                      toast({ title: "URL copied!" });
+                    }}
+                  >
+                    Copy
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Per-cottage feeds: append <code className="bg-muted px-1 rounded">?cottage=1</code> through <code className="bg-muted px-1 rounded">?cottage=7</code>
+                </p>
+              </CardContent>
+            </Card>
           </div>
         )}
 
