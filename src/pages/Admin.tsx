@@ -252,12 +252,6 @@ const Admin = () => {
     return <>#{cottageNumber}</>;
   };
 
-  const icalBaseUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ical-feed`;
-
-  const copyToClipboard = (text: string, label: string) => {
-    navigator.clipboard.writeText(text);
-    toast({ title: `${label} copied!` });
-  };
 
   const unassignedCount = reservations.filter((r) => r.cottage_number === 0).length;
 
