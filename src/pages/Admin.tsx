@@ -9,13 +9,24 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Trash2, Edit, LogOut, Calendar, Link as LinkIcon, Copy } from "lucide-react";
+import { Plus, Trash2, Edit, LogOut, Calendar, Link as LinkIcon, Copy, RefreshCw, Settings, Globe, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import type { Tables, TablesInsert } from "@/integrations/supabase/types";
 
-type Reservation = Tables<"reservations">;
+const ADMIN_PASSWORD = "ureki2024";
 
-const ADMIN_PASSWORD = "ureki2024"; // Simple password gate — change this
+interface Reservation {
+  id: string;
+  guest_name: string;
+  guest_phone: string | null;
+  cottage_number: number;
+  check_in: string;
+  check_out: string;
+  notes: string | null;
+  source: string;
+  external_uid: string | null;
+  created_at: string;
+  updated_at: string;
+}
 
 const Admin = () => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -24,6 +35,11 @@ const Admin = () => {
   const [loading, setLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [syncing, setSyncing] = useState(false);
+  const [bookingComUrl, setBookingComUrl] = useState("");
+  const [savedBookingComUrl, setSavedBookingComUrl] = useState("");
+  const [lastSynced, setLastSynced] = useState<string | null>(null);
+  const [showSettings, setShowSettings] = useState(false);
   const { toast } = useToast();
 
   // Form state
@@ -40,7 +56,10 @@ const Admin = () => {
   }, []);
 
   useEffect(() => {
-    if (authenticated) fetchReservations();
+    if (authenticated) {
+      fetchReservations();
+      fetchBookingComSettings();
+    }
   }, [authenticated]);
 
   const handleLogin = (e: React.FormEvent) => {
@@ -67,9 +86,72 @@ const Admin = () => {
     if (error) {
       toast({ title: "Error loading reservations", description: error.message, variant: "destructive" });
     } else {
-      setReservations(data || []);
+      setReservations((data as unknown as Reservation[]) || []);
     }
     setLoading(false);
+  };
+
+  const fetchBookingComSettings = async () => {
+    const { data } = await supabase
+      .from("booking_com_settings")
+      .select("*")
+      .limit(1)
+      .maybeSingle();
+    if (data) {
+      setBookingComUrl((data as any).ical_url || "");
+      setSavedBookingComUrl((data as any).ical_url || "");
+      setLastSynced((data as any).last_synced_at || null);
+    }
+  };
+
+  const saveBookingComUrl = async () => {
+    if (!bookingComUrl.trim()) {
+      toast({ title: "Please enter a URL", variant: "destructive" });
+      return;
+    }
+
+    const { data: existing } = await supabase
+      .from("booking_com_settings")
+      .select("id")
+      .limit(1)
+      .maybeSingle();
+
+    let error;
+    if (existing) {
+      ({ error } = await supabase
+        .from("booking_com_settings")
+        .update({ ical_url: bookingComUrl.trim() } as any)
+        .eq("id", (existing as any).id));
+    } else {
+      ({ error } = await supabase
+        .from("booking_com_settings")
+        .insert({ ical_url: bookingComUrl.trim() } as any));
+    }
+
+    if (error) {
+      toast({ title: "Error saving URL", description: error.message, variant: "destructive" });
+    } else {
+      setSavedBookingComUrl(bookingComUrl.trim());
+      toast({ title: "Booking.com URL saved!" });
+    }
+  };
+
+  const handleSync = async () => {
+    setSyncing(true);
+    try {
+      const res = await supabase.functions.invoke("import-ical");
+      if (res.error) throw res.error;
+      const result = res.data;
+      toast({
+        title: "Sync complete!",
+        description: `${result.imported} new, ${result.updated} updated, ${result.total} total events`,
+      });
+      fetchReservations();
+      fetchBookingComSettings();
+    } catch (err: any) {
+      toast({ title: "Sync failed", description: err.message, variant: "destructive" });
+    }
+    setSyncing(false);
   };
 
   const resetForm = () => {
@@ -100,7 +182,7 @@ const Admin = () => {
       return;
     }
 
-    const payload: TablesInsert<"reservations"> = {
+    const payload: any = {
       guest_name: guestName.trim(),
       guest_phone: guestPhone.trim() || null,
       cottage_number: parseInt(cottageNumber),
@@ -113,6 +195,7 @@ const Admin = () => {
     if (editingId) {
       ({ error } = await supabase.from("reservations").update(payload).eq("id", editingId));
     } else {
+      payload.source = "manual";
       ({ error } = await supabase.from("reservations").insert(payload));
     }
 
@@ -155,12 +238,28 @@ const Admin = () => {
     return <Badge className={v.className}>{v.label}</Badge>;
   };
 
-  const icalUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ical-feed`;
-
-  const copyIcalUrl = () => {
-    navigator.clipboard.writeText(icalUrl);
-    toast({ title: "iCal URL copied!" });
+  const sourceBadge = (source: string) => {
+    if (source === "booking_com") {
+      return <Badge variant="outline" className="text-xs gap-1"><Globe size={10} />Booking</Badge>;
+    }
+    return <Badge variant="outline" className="text-xs gap-1"><Phone size={10} />Manual</Badge>;
   };
+
+  const unassignedBadge = (cottageNumber: number) => {
+    if (cottageNumber === 0) {
+      return <Badge className="bg-amber-500 text-white text-xs animate-pulse">Assign!</Badge>;
+    }
+    return <>#{cottageNumber}</>;
+  };
+
+  const icalBaseUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ical-feed`;
+
+  const copyToClipboard = (text: string, label: string) => {
+    navigator.clipboard.writeText(text);
+    toast({ title: `${label} copied!` });
+  };
+
+  const unassignedCount = reservations.filter((r) => r.cottage_number === 0).length;
 
   if (!authenticated) {
     return (
@@ -198,8 +297,14 @@ const Admin = () => {
           <h1 className="text-xl font-bold text-foreground flex items-center gap-2">
             <Calendar className="text-primary" size={24} />
             Reservations
+            {unassignedCount > 0 && (
+              <Badge className="bg-amber-500 text-white">{unassignedCount} unassigned</Badge>
+            )}
           </h1>
           <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" onClick={() => setShowSettings(!showSettings)}>
+              <Settings size={16} />
+            </Button>
             <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) resetForm(); }}>
               <DialogTrigger asChild>
                 <Button size="sm">
@@ -227,6 +332,7 @@ const Admin = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="0">Unassigned</SelectItem>
                         {[1, 2, 3, 4, 5, 6, 7].map((n) => (
                           <SelectItem key={n} value={String(n)}>Cottage {n}</SelectItem>
                         ))}
@@ -259,22 +365,74 @@ const Admin = () => {
       </div>
 
       <div className="container mx-auto px-4 py-6 space-y-6">
-        {/* iCal Sync Card */}
-        <Card>
-          <CardContent className="py-4">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-              <div className="flex items-center gap-2 text-sm font-medium">
-                <LinkIcon size={16} className="text-primary" />
-                Booking.com Sync URL:
-              </div>
-              <code className="text-xs bg-muted px-2 py-1 rounded flex-1 break-all">{icalUrl}</code>
-              <Button variant="outline" size="sm" onClick={copyIcalUrl}>
-                <Copy size={14} />
-                Copy
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Settings Panel */}
+        {showSettings && (
+          <div className="space-y-4">
+            {/* Booking.com Import URL */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base flex items-center gap-2">
+                  <Globe size={16} className="text-primary" />
+                  Booking.com Import
+                </CardTitle>
+                <CardDescription>Paste the iCal URL from Booking.com to import reservations</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="https://admin.booking.com/..."
+                    value={bookingComUrl}
+                    onChange={(e) => setBookingComUrl(e.target.value)}
+                    className="flex-1"
+                  />
+                  <Button variant="outline" size="sm" onClick={saveBookingComUrl}>Save</Button>
+                </div>
+                {savedBookingComUrl && (
+                  <div className="flex items-center gap-2">
+                    <Button size="sm" onClick={handleSync} disabled={syncing}>
+                      <RefreshCw size={14} className={syncing ? "animate-spin" : ""} />
+                      {syncing ? "Syncing..." : "Sync Now"}
+                    </Button>
+                    {lastSynced && (
+                      <span className="text-xs text-muted-foreground">
+                        Last synced: {new Date(lastSynced).toLocaleString()}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Export iCal URLs */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base flex items-center gap-2">
+                  <LinkIcon size={16} className="text-primary" />
+                  Export iCal URLs
+                </CardTitle>
+                <CardDescription>Use these URLs to sync your reservations to Booking.com or Google Calendar</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium w-24">All cottages:</span>
+                  <code className="text-xs bg-muted px-2 py-1 rounded flex-1 break-all truncate">{icalBaseUrl}</code>
+                  <Button variant="ghost" size="icon" onClick={() => copyToClipboard(icalBaseUrl, "Combined URL")}>
+                    <Copy size={14} />
+                  </Button>
+                </div>
+                {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+                  <div key={n} className="flex items-center gap-2">
+                    <span className="text-sm font-medium w-24">Cottage {n}:</span>
+                    <code className="text-xs bg-muted px-2 py-1 rounded flex-1 break-all truncate">{icalBaseUrl}?cottage={n}</code>
+                    <Button variant="ghost" size="icon" onClick={() => copyToClipboard(`${icalBaseUrl}?cottage=${n}`, `Cottage ${n} URL`)}>
+                      <Copy size={14} />
+                    </Button>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
         {/* Reservations Table */}
         <Card>
@@ -291,6 +449,7 @@ const Admin = () => {
                   <TableHeader>
                     <TableRow>
                       <TableHead>Status</TableHead>
+                      <TableHead>Source</TableHead>
                       <TableHead>Guest</TableHead>
                       <TableHead>Cottage</TableHead>
                       <TableHead>Check-in</TableHead>
@@ -301,10 +460,11 @@ const Admin = () => {
                   </TableHeader>
                   <TableBody>
                     {reservations.map((r) => (
-                      <TableRow key={r.id}>
+                      <TableRow key={r.id} className={r.cottage_number === 0 ? "bg-amber-50 dark:bg-amber-950/20" : ""}>
                         <TableCell>{statusBadge(r.check_in, r.check_out)}</TableCell>
+                        <TableCell>{sourceBadge(r.source)}</TableCell>
                         <TableCell className="font-medium">{r.guest_name}</TableCell>
-                        <TableCell>#{r.cottage_number}</TableCell>
+                        <TableCell>{unassignedBadge(r.cottage_number)}</TableCell>
                         <TableCell>{r.check_in}</TableCell>
                         <TableCell>{r.check_out}</TableCell>
                         <TableCell>{r.guest_phone || "—"}</TableCell>
