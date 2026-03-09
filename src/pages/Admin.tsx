@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Trash2, Edit, LogOut, Calendar, Link as LinkIcon, Copy, RefreshCw, Settings, Globe, Phone } from "lucide-react";
+import { Plus, Trash2, Edit, LogOut, Calendar, RefreshCw, Settings, Globe, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const ADMIN_PASSWORD = "ureki2024";
@@ -252,12 +252,6 @@ const Admin = () => {
     return <>#{cottageNumber}</>;
   };
 
-  const icalBaseUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ical-feed`;
-
-  const copyToClipboard = (text: string, label: string) => {
-    navigator.clipboard.writeText(text);
-    toast({ title: `${label} copied!` });
-  };
 
   const unassignedCount = reservations.filter((r) => r.cottage_number === 0).length;
 
@@ -403,34 +397,6 @@ const Admin = () => {
               </CardContent>
             </Card>
 
-            {/* Export iCal URLs */}
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base flex items-center gap-2">
-                  <LinkIcon size={16} className="text-primary" />
-                  Export iCal URLs
-                </CardTitle>
-                <CardDescription>Use these URLs to sync your reservations to Booking.com or Google Calendar</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium w-24">All cottages:</span>
-                  <code className="text-xs bg-muted px-2 py-1 rounded flex-1 break-all truncate">{icalBaseUrl}</code>
-                  <Button variant="ghost" size="icon" onClick={() => copyToClipboard(icalBaseUrl, "Combined URL")}>
-                    <Copy size={14} />
-                  </Button>
-                </div>
-                {[1, 2, 3, 4, 5, 6, 7].map((n) => (
-                  <div key={n} className="flex items-center gap-2">
-                    <span className="text-sm font-medium w-24">Cottage {n}:</span>
-                    <code className="text-xs bg-muted px-2 py-1 rounded flex-1 break-all truncate">{icalBaseUrl}?cottage={n}</code>
-                    <Button variant="ghost" size="icon" onClick={() => copyToClipboard(`${icalBaseUrl}?cottage=${n}`, `Cottage ${n} URL`)}>
-                      <Copy size={14} />
-                    </Button>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
           </div>
         )}
 
