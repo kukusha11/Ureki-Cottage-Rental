@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Cottages from "./pages/Cottages";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import ScrollToTop from "./components/ScrollToTop";
