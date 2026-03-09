@@ -15,10 +15,20 @@ Deno.serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const { data: reservations, error } = await supabase
+    // Support ?cottage=N for per-cottage feeds
+    const url = new URL(req.url);
+    const cottageParam = url.searchParams.get("cottage");
+
+    let query = supabase
       .from("reservations")
       .select("*")
       .order("check_in", { ascending: true });
+
+    if (cottageParam) {
+      query = query.eq("cottage_number", parseInt(cottageParam));
+    }
+
+    const { data: reservations, error } = await query;
 
     if (error) throw error;
 
