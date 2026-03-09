@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Cottages from "./pages/Cottages";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import ScrollToTop from "./components/ScrollToTop";
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/cottages" element={<Cottages />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/admin" element={<Admin />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
