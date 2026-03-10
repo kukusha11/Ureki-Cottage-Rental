@@ -397,7 +397,7 @@ const Admin = () => {
               </CardContent>
             </Card>
 
-            {/* iCal Export */}
+            {/* iCal Export — per-cottage */}
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-base flex items-center gap-2">
@@ -405,32 +405,29 @@ const Admin = () => {
                   iCal Export (→ Booking.com)
                 </CardTitle>
                 <CardDescription>
-                  Paste this URL into Booking.com → Calendar → Add a calendar connection to export your manual reservations
+                  In Booking.com, go to each room → Calendar → Sync calendars → "Add a calendar connection" → paste the matching cottage URL below.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex gap-2">
-                  <Input
-                    readOnly
-                    value={`https://${import.meta.env.VITE_SUPABASE_PROJECT_ID || 'fhbytiijiiprnhfnlqcj'}.supabase.co/functions/v1/ical-feed`}
-                    className="flex-1 text-xs"
-                  />
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      navigator.clipboard.writeText(
-                        `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID || 'fhbytiijiiprnhfnlqcj'}.supabase.co/functions/v1/ical-feed`
-                      );
-                      toast({ title: "URL copied!" });
-                    }}
-                  >
-                    Copy
-                  </Button>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Per-cottage feeds: append <code className="bg-muted px-1 rounded">?cottage=1</code> through <code className="bg-muted px-1 rounded">?cottage=7</code>
-                </p>
+              <CardContent className="space-y-2">
+                {[1, 2, 3, 4, 5, 6, 7].map((n) => {
+                  const url = `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID || 'fhbytiijiiprnhfnlqcj'}.supabase.co/functions/v1/ical-feed?cottage=${n}`;
+                  return (
+                    <div key={n} className="flex items-center gap-2">
+                      <span className="text-sm font-medium w-20 shrink-0">Cottage {n}</span>
+                      <Input readOnly value={url} className="flex-1 text-xs" />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          navigator.clipboard.writeText(url);
+                          toast({ title: `Cottage ${n} URL copied!` });
+                        }}
+                      >
+                        Copy
+                      </Button>
+                    </div>
+                  );
+                })}
               </CardContent>
             </Card>
           </div>
