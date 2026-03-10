@@ -262,9 +262,9 @@ const Admin = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calendar className="text-primary" size={24} />
-              Admin Login
+              ადმინისტრატორი
             </CardTitle>
-            <CardDescription>Enter password to manage reservations</CardDescription>
+            <CardDescription>შეიყვანეთ პაროლი რეზერვაციების სამართავად</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
