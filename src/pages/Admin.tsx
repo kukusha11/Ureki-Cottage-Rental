@@ -140,7 +140,7 @@ const Admin = () => {
         description: `${result.imported} ახალი, ${result.updated} განახლებული, ${result.total} სულ`,
       });
       fetchReservations();
-      fetchBookingComSettings();
+      fetchCottageUrls();
     } catch (err: any) {
       toast({ title: "სინქრონიზაცია ვერ მოხერხდა", description: err.message, variant: "destructive" });
     }
