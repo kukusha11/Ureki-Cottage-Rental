@@ -379,7 +379,7 @@ const Admin = () => {
                     onChange={(e) => setBookingComUrl(e.target.value)}
                     className="flex-1"
                   />
-                  <Button variant="outline" size="sm" onClick={saveBookingComUrl}>Save</Button>
+                  <Button variant="outline" size="sm" onClick={saveBookingComUrl}>შენახვა</Button>
                 </div>
                 {savedBookingComUrl && (
                   <div className="flex items-center gap-2">
