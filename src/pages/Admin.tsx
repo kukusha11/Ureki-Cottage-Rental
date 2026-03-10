@@ -143,8 +143,8 @@ const Admin = () => {
       if (res.error) throw res.error;
       const result = res.data;
       toast({
-        title: "Sync complete!",
-        description: `${result.imported} new, ${result.updated} updated, ${result.total} total events`,
+        title: "სინქრონიზაცია დასრულდა!",
+        description: `${result.imported} ახალი, ${result.updated} განახლებული, ${result.total} სულ`,
       });
       fetchReservations();
       fetchBookingComSettings();
