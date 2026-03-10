@@ -290,9 +290,9 @@ const Admin = () => {
         <div className="container mx-auto px-4 flex items-center justify-between h-16">
           <h1 className="text-xl font-bold text-foreground flex items-center gap-2">
             <Calendar className="text-primary" size={24} />
-            Reservations
+            რეზერვაციები
             {unassignedCount > 0 && (
-              <Badge className="bg-amber-500 text-white">{unassignedCount} unassigned</Badge>
+              <Badge className="bg-amber-500 text-white">{unassignedCount} გაუნაწილებელი</Badge>
             )}
           </h1>
           <div className="flex items-center gap-2">
