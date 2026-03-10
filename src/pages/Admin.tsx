@@ -84,7 +84,7 @@ const Admin = () => {
       .select("*")
       .order("check_in", { ascending: true });
     if (error) {
-      toast({ title: "Error loading reservations", description: error.message, variant: "destructive" });
+      toast({ title: "რეზერვაციების ჩატვირთვის შეცდომა", description: error.message, variant: "destructive" });
     } else {
       setReservations((data as unknown as Reservation[]) || []);
     }
