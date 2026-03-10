@@ -389,7 +389,7 @@ const Admin = () => {
                     </Button>
                     {lastSynced && (
                       <span className="text-xs text-muted-foreground">
-                        Last synced: {new Date(lastSynced).toLocaleString()}
+                        ბოლო სინქრონიზაცია: {new Date(lastSynced).toLocaleString("ka-GE")}
                       </span>
                     )}
                   </div>
