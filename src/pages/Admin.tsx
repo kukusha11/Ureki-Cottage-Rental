@@ -339,7 +339,7 @@ const Admin = () => {
                       <Input id="checkIn" type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} required />
                     </div>
                     <div>
-                      <Label htmlFor="checkOut">Check-out *</Label>
+                      <Label htmlFor="checkOut">გამობინავება *</Label>
                       <Input id="checkOut" type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} required />
                     </div>
                   </div>
