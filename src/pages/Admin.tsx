@@ -247,7 +247,7 @@ const Admin = () => {
 
   const unassignedBadge = (cottageNumber: number) => {
     if (cottageNumber === 0) {
-      return <Badge className="bg-amber-500 text-white text-xs animate-pulse">Assign!</Badge>;
+      return <Badge className="bg-amber-500 text-white text-xs animate-pulse">მიანიჭე!</Badge>;
     }
     return <>#{cottageNumber}</>;
   };
