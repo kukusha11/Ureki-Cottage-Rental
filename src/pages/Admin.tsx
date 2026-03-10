@@ -270,7 +270,7 @@ const Admin = () => {
             <form onSubmit={handleLogin} className="space-y-4">
               <Input
                 type="password"
-                placeholder="Password"
+                placeholder="პაროლი"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoFocus
