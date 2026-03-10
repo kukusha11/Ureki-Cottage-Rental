@@ -385,7 +385,7 @@ const Admin = () => {
                   <div className="flex items-center gap-2">
                     <Button size="sm" onClick={handleSync} disabled={syncing}>
                       <RefreshCw size={14} className={syncing ? "animate-spin" : ""} />
-                      {syncing ? "Syncing..." : "Sync Now"}
+                      {syncing ? "სინქრონიზაცია..." : "სინქრონიზაცია"}
                     </Button>
                     {lastSynced && (
                       <span className="text-xs text-muted-foreground">
