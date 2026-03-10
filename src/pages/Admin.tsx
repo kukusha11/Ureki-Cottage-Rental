@@ -320,7 +320,7 @@ const Admin = () => {
                     <Input id="guestPhone" value={guestPhone} onChange={(e) => setGuestPhone(e.target.value)} />
                   </div>
                   <div>
-                    <Label htmlFor="cottage">Cottage #</Label>
+                    <Label htmlFor="cottage">კოტეჯი #</Label>
                     <Select value={cottageNumber} onValueChange={setCottageNumber}>
                       <SelectTrigger>
                         <SelectValue />
