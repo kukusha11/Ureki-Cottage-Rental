@@ -413,7 +413,7 @@ const Admin = () => {
                   const url = `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID || 'fhbytiijiiprnhfnlqcj'}.supabase.co/functions/v1/ical-feed?cottage=${n}`;
                   return (
                     <div key={n} className="flex items-center gap-2">
-                      <span className="text-sm font-medium w-20 shrink-0">Cottage {n}</span>
+                      <span className="text-sm font-medium w-20 shrink-0">კოტეჯი {n}</span>
                       <Input readOnly value={url} className="flex-1 text-xs" />
                       <Button
                         variant="outline"
