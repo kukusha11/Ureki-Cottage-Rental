@@ -242,7 +242,7 @@ const Admin = () => {
     if (source === "booking_com") {
       return <Badge variant="outline" className="text-xs gap-1"><Globe size={10} />Booking</Badge>;
     }
-    return <Badge variant="outline" className="text-xs gap-1"><Phone size={10} />Manual</Badge>;
+    return <Badge variant="outline" className="text-xs gap-1"><Phone size={10} />ხელით</Badge>;
   };
 
   const unassignedBadge = (cottageNumber: number) => {
