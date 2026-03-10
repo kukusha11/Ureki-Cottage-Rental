@@ -178,7 +178,7 @@ const Admin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!guestName || !checkIn || !checkOut) {
-      toast({ title: "Please fill in required fields", variant: "destructive" });
+      toast({ title: "გთხოვთ შეავსოთ სავალდებულო ველები", variant: "destructive" });
       return;
     }
 
