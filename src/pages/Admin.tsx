@@ -275,7 +275,7 @@ const Admin = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 autoFocus
               />
-              <Button type="submit" className="w-full">Login</Button>
+              <Button type="submit" className="w-full">შესვლა</Button>
             </form>
           </CardContent>
         </Card>
