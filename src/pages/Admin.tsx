@@ -402,10 +402,10 @@ const Admin = () => {
               <CardHeader className="pb-3">
                 <CardTitle className="text-base flex items-center gap-2">
                   <Calendar size={16} className="text-primary" />
-                  iCal Export (→ Booking.com)
+                   iCal ექსპორტი (→ Booking.com)
                 </CardTitle>
                 <CardDescription>
-                  In Booking.com, go to each room → Calendar → Sync calendars → "Add a calendar connection" → paste the matching cottage URL below.
+                  Booking.com-ში გადადით თითოეულ ოთახზე → კალენდარი → კალენდრების სინქრონიზაცია → „კალენდრის კავშირის დამატება" → ჩასვით შესაბამისი კოტეჯის URL ქვემოდან.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
