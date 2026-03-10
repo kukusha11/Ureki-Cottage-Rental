@@ -36,9 +36,9 @@ const Admin = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [syncing, setSyncing] = useState(false);
-  const [bookingComUrl, setBookingComUrl] = useState("");
-  const [savedBookingComUrl, setSavedBookingComUrl] = useState("");
-  const [lastSynced, setLastSynced] = useState<string | null>(null);
+  const [cottageUrls, setCottageUrls] = useState<Record<number, { id: string; ical_url: string; last_synced_at: string | null }>>({});
+  const [cottageUrlInputs, setCottageUrlInputs] = useState<Record<number, string>>({});
+  const [hasAnyUrl, setHasAnyUrl] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const { toast } = useToast();
 
