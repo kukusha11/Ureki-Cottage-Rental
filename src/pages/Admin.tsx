@@ -91,48 +91,41 @@ const Admin = () => {
     setLoading(false);
   };
 
-  const fetchBookingComSettings = async () => {
+  const fetchCottageUrls = async () => {
     const { data } = await supabase
-      .from("booking_com_settings")
+      .from("booking_com_cottage_urls")
       .select("*")
-      .limit(1)
-      .maybeSingle();
+      .order("cottage_number", { ascending: true });
     if (data) {
-      setBookingComUrl((data as any).ical_url || "");
-      setSavedBookingComUrl((data as any).ical_url || "");
-      setLastSynced((data as any).last_synced_at || null);
+      const urlMap: Record<number, { id: string; ical_url: string; last_synced_at: string | null }> = {};
+      const inputMap: Record<number, string> = {};
+      let anyUrl = false;
+      for (const row of data as any[]) {
+        urlMap[row.cottage_number] = { id: row.id, ical_url: row.ical_url, last_synced_at: row.last_synced_at };
+        inputMap[row.cottage_number] = row.ical_url || "";
+        if (row.ical_url) anyUrl = true;
+      }
+      setCottageUrls(urlMap);
+      setCottageUrlInputs(inputMap);
+      setHasAnyUrl(anyUrl);
     }
   };
 
-  const saveBookingComUrl = async () => {
-    if (!bookingComUrl.trim()) {
-      toast({ title: "გთხოვთ შეიყვანოთ URL", variant: "destructive" });
-      return;
-    }
+  const saveCottageUrl = async (cottageNumber: number) => {
+    const url = (cottageUrlInputs[cottageNumber] || "").trim();
+    const existing = cottageUrls[cottageNumber];
+    if (!existing) return;
 
-    const { data: existing } = await supabase
-      .from("booking_com_settings")
-      .select("id")
-      .limit(1)
-      .maybeSingle();
-
-    let error;
-    if (existing) {
-      ({ error } = await supabase
-        .from("booking_com_settings")
-        .update({ ical_url: bookingComUrl.trim() } as any)
-        .eq("id", (existing as any).id));
-    } else {
-      ({ error } = await supabase
-        .from("booking_com_settings")
-        .insert({ ical_url: bookingComUrl.trim() } as any));
-    }
+    const { error } = await supabase
+      .from("booking_com_cottage_urls")
+      .update({ ical_url: url } as any)
+      .eq("id", existing.id);
 
     if (error) {
-      toast({ title: "URL-ის შენახვის შეცდომა", description: error.message, variant: "destructive" });
+      toast({ title: `კოტეჯი ${cottageNumber} URL-ის შენახვის შეცდომა`, description: error.message, variant: "destructive" });
     } else {
-      setSavedBookingComUrl(bookingComUrl.trim());
-      toast({ title: "Booking.com URL შენახულია!" });
+      toast({ title: `კოტეჯი ${cottageNumber} URL შენახულია!` });
+      fetchCottageUrls();
     }
   };
 
