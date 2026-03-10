@@ -367,9 +367,9 @@ const Admin = () => {
               <CardHeader className="pb-3">
                 <CardTitle className="text-base flex items-center gap-2">
                   <Globe size={16} className="text-primary" />
-                  Booking.com Import
+                   Booking.com იმპორტი
                 </CardTitle>
-                <CardDescription>Paste the iCal URL from Booking.com to import reservations</CardDescription>
+                <CardDescription>ჩასვით iCal URL Booking.com-დან რეზერვაციების იმპორტისთვის</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex gap-2">
