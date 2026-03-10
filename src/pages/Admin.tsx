@@ -303,7 +303,7 @@ const Admin = () => {
               <DialogTrigger asChild>
                 <Button size="sm">
                   <Plus size={16} />
-                  Add
+                  დამატება
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-md">
