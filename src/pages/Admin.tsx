@@ -420,7 +420,7 @@ const Admin = () => {
                         size="sm"
                         onClick={() => {
                           navigator.clipboard.writeText(url);
-                          toast({ title: `Cottage ${n} URL copied!` });
+                          toast({ title: `კოტეჯი ${n} URL კოპირებულია!` });
                         }}
                       >
                         Copy
