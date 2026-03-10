@@ -316,7 +316,7 @@ const Admin = () => {
                     <Input id="guestName" value={guestName} onChange={(e) => setGuestName(e.target.value)} required />
                   </div>
                   <div>
-                    <Label htmlFor="guestPhone">Phone</Label>
+                    <Label htmlFor="guestPhone">ტელეფონი</Label>
                     <Input id="guestPhone" value={guestPhone} onChange={(e) => setGuestPhone(e.target.value)} />
                   </div>
                   <div>
