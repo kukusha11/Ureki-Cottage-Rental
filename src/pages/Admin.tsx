@@ -423,7 +423,7 @@ const Admin = () => {
                           toast({ title: `კოტეჯი ${n} URL კოპირებულია!` });
                         }}
                       >
-                        Copy
+                        კოპირება
                       </Button>
                     </div>
                   );
