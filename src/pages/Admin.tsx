@@ -68,7 +68,7 @@ const Admin = () => {
       setAuthenticated(true);
       sessionStorage.setItem("admin_auth", "true");
     } else {
-      toast({ title: "Wrong password", variant: "destructive" });
+      toast({ title: "არასწორი პაროლი", variant: "destructive" });
     }
   };
 
