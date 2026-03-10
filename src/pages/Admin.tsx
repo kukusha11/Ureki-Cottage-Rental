@@ -149,7 +149,7 @@ const Admin = () => {
       fetchReservations();
       fetchBookingComSettings();
     } catch (err: any) {
-      toast({ title: "Sync failed", description: err.message, variant: "destructive" });
+      toast({ title: "სინქრონიზაცია ვერ მოხერხდა", description: err.message, variant: "destructive" });
     }
     setSyncing(false);
   };
