@@ -106,7 +106,7 @@ const Admin = () => {
 
   const saveBookingComUrl = async () => {
     if (!bookingComUrl.trim()) {
-      toast({ title: "Please enter a URL", variant: "destructive" });
+      toast({ title: "გთხოვთ შეიყვანოთ URL", variant: "destructive" });
       return;
     }
 
