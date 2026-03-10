@@ -58,7 +58,7 @@ const Admin = () => {
   useEffect(() => {
     if (authenticated) {
       fetchReservations();
-      fetchBookingComSettings();
+      fetchCottageUrls();
     }
   }, [authenticated]);
 
