@@ -326,9 +326,9 @@ const Admin = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="0">Unassigned</SelectItem>
+                        <SelectItem value="0">გაუნაწილებელი</SelectItem>
                         {[1, 2, 3, 4, 5, 6, 7].map((n) => (
-                          <SelectItem key={n} value={String(n)}>Cottage {n}</SelectItem>
+                          <SelectItem key={n} value={String(n)}>კოტეჯი {n}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
