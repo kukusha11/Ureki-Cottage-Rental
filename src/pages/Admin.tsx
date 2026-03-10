@@ -230,9 +230,9 @@ const Admin = () => {
   const statusBadge = (checkIn: string, checkOut: string) => {
     const status = getStatus(checkIn, checkOut);
     const variants: Record<string, { label: string; className: string }> = {
-      past: { label: "Past", className: "bg-muted text-muted-foreground" },
-      current: { label: "Now", className: "bg-green-500 text-white" },
-      upcoming: { label: "Upcoming", className: "bg-primary text-primary-foreground" },
+      past: { label: "გასული", className: "bg-muted text-muted-foreground" },
+      current: { label: "ახლა", className: "bg-green-500 text-white" },
+      upcoming: { label: "მომავალი", className: "bg-primary text-primary-foreground" },
     };
     const v = variants[status];
     return <Badge className={v.className}>{v.label}</Badge>;
