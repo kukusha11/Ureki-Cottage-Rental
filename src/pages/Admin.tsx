@@ -344,8 +344,8 @@ const Admin = () => {
                     </div>
                   </div>
                   <div>
-                    <Label htmlFor="notes">Notes</Label>
-                    <Textarea id="notes" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Optional notes..." rows={2} />
+                    <Label htmlFor="notes">შენიშვნები</Label>
+                    <Textarea id="notes" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="არასავალდებულო შენიშვნები..." rows={2} />
                   </div>
                   <Button type="submit" className="w-full">{editingId ? "Update" : "Add Reservation"}</Button>
                 </form>
