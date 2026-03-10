@@ -210,12 +210,12 @@ const Admin = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Delete this reservation?")) return;
+    if (!confirm("წაშალოთ ეს რეზერვაცია?")) return;
     const { error } = await supabase.from("reservations").delete().eq("id", id);
     if (error) {
-      toast({ title: "Error deleting", description: error.message, variant: "destructive" });
+      toast({ title: "წაშლის შეცდომა", description: error.message, variant: "destructive" });
     } else {
-      toast({ title: "Reservation deleted" });
+      toast({ title: "რეზერვაცია წაშლილია" });
       fetchReservations();
     }
   };
