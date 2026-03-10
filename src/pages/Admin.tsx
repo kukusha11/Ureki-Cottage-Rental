@@ -335,7 +335,7 @@ const Admin = () => {
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <Label htmlFor="checkIn">Check-in *</Label>
+                      <Label htmlFor="checkIn">დაბინავება *</Label>
                       <Input id="checkIn" type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} required />
                     </div>
                     <div>
