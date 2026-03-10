@@ -129,10 +129,10 @@ const Admin = () => {
     }
 
     if (error) {
-      toast({ title: "Error saving URL", description: error.message, variant: "destructive" });
+      toast({ title: "URL-ის შენახვის შეცდომა", description: error.message, variant: "destructive" });
     } else {
       setSavedBookingComUrl(bookingComUrl.trim());
-      toast({ title: "Booking.com URL saved!" });
+      toast({ title: "Booking.com URL შენახულია!" });
     }
   };
 
