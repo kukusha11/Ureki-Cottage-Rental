@@ -36,9 +36,9 @@ const Admin = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [syncing, setSyncing] = useState(false);
-  const [bookingComUrl, setBookingComUrl] = useState("");
-  const [savedBookingComUrl, setSavedBookingComUrl] = useState("");
-  const [lastSynced, setLastSynced] = useState<string | null>(null);
+  const [cottageUrls, setCottageUrls] = useState<Record<number, { id: string; ical_url: string; last_synced_at: string | null }>>({});
+  const [cottageUrlInputs, setCottageUrlInputs] = useState<Record<number, string>>({});
+  const [hasAnyUrl, setHasAnyUrl] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const { toast } = useToast();
 
@@ -58,7 +58,7 @@ const Admin = () => {
   useEffect(() => {
     if (authenticated) {
       fetchReservations();
-      fetchBookingComSettings();
+      fetchCottageUrls();
     }
   }, [authenticated]);
 
@@ -91,48 +91,41 @@ const Admin = () => {
     setLoading(false);
   };
 
-  const fetchBookingComSettings = async () => {
+  const fetchCottageUrls = async () => {
     const { data } = await supabase
-      .from("booking_com_settings")
+      .from("booking_com_cottage_urls")
       .select("*")
-      .limit(1)
-      .maybeSingle();
+      .order("cottage_number", { ascending: true });
     if (data) {
-      setBookingComUrl((data as any).ical_url || "");
-      setSavedBookingComUrl((data as any).ical_url || "");
-      setLastSynced((data as any).last_synced_at || null);
+      const urlMap: Record<number, { id: string; ical_url: string; last_synced_at: string | null }> = {};
+      const inputMap: Record<number, string> = {};
+      let anyUrl = false;
+      for (const row of data as any[]) {
+        urlMap[row.cottage_number] = { id: row.id, ical_url: row.ical_url, last_synced_at: row.last_synced_at };
+        inputMap[row.cottage_number] = row.ical_url || "";
+        if (row.ical_url) anyUrl = true;
+      }
+      setCottageUrls(urlMap);
+      setCottageUrlInputs(inputMap);
+      setHasAnyUrl(anyUrl);
     }
   };
 
-  const saveBookingComUrl = async () => {
-    if (!bookingComUrl.trim()) {
-      toast({ title: "გთხოვთ შეიყვანოთ URL", variant: "destructive" });
-      return;
-    }
+  const saveCottageUrl = async (cottageNumber: number) => {
+    const url = (cottageUrlInputs[cottageNumber] || "").trim();
+    const existing = cottageUrls[cottageNumber];
+    if (!existing) return;
 
-    const { data: existing } = await supabase
-      .from("booking_com_settings")
-      .select("id")
-      .limit(1)
-      .maybeSingle();
-
-    let error;
-    if (existing) {
-      ({ error } = await supabase
-        .from("booking_com_settings")
-        .update({ ical_url: bookingComUrl.trim() } as any)
-        .eq("id", (existing as any).id));
-    } else {
-      ({ error } = await supabase
-        .from("booking_com_settings")
-        .insert({ ical_url: bookingComUrl.trim() } as any));
-    }
+    const { error } = await supabase
+      .from("booking_com_cottage_urls")
+      .update({ ical_url: url } as any)
+      .eq("id", existing.id);
 
     if (error) {
-      toast({ title: "URL-ის შენახვის შეცდომა", description: error.message, variant: "destructive" });
+      toast({ title: `კოტეჯი ${cottageNumber} URL-ის შენახვის შეცდომა`, description: error.message, variant: "destructive" });
     } else {
-      setSavedBookingComUrl(bookingComUrl.trim());
-      toast({ title: "Booking.com URL შენახულია!" });
+      toast({ title: `კოტეჯი ${cottageNumber} URL შენახულია!` });
+      fetchCottageUrls();
     }
   };
 
@@ -147,7 +140,7 @@ const Admin = () => {
         description: `${result.imported} ახალი, ${result.updated} განახლებული, ${result.total} სულ`,
       });
       fetchReservations();
-      fetchBookingComSettings();
+      fetchCottageUrls();
     } catch (err: any) {
       toast({ title: "სინქრონიზაცია ვერ მოხერხდა", description: err.message, variant: "destructive" });
     }
@@ -362,36 +355,41 @@ const Admin = () => {
         {/* Settings Panel */}
         {showSettings && (
           <div className="space-y-4">
-            {/* Booking.com Import URL */}
+            {/* Booking.com Import URLs — per cottage */}
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-base flex items-center gap-2">
                   <Globe size={16} className="text-primary" />
                    Booking.com იმპორტი
                 </CardTitle>
-                <CardDescription>ჩასვით iCal URL Booking.com-დან რეზერვაციების იმპორტისთვის</CardDescription>
+                <CardDescription>ჩასვით თითოეული კოტეჯის iCal URL Booking.com-დან</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="flex gap-2">
-                  <Input
-                    placeholder="https://admin.booking.com/..."
-                    value={bookingComUrl}
-                    onChange={(e) => setBookingComUrl(e.target.value)}
-                    className="flex-1"
-                  />
-                  <Button variant="outline" size="sm" onClick={saveBookingComUrl}>შენახვა</Button>
-                </div>
-                {savedBookingComUrl && (
-                  <div className="flex items-center gap-2">
-                    <Button size="sm" onClick={handleSync} disabled={syncing}>
-                      <RefreshCw size={14} className={syncing ? "animate-spin" : ""} />
-                      {syncing ? "სინქრონიზაცია..." : "სინქრონიზაცია"}
-                    </Button>
-                    {lastSynced && (
+                {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+                  <div key={n} className="space-y-1">
+                    <Label className="text-xs font-medium">კოტეჯი {n}</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder={`კოტეჯი ${n} — Booking.com iCal URL`}
+                        value={cottageUrlInputs[n] || ""}
+                        onChange={(e) => setCottageUrlInputs((prev) => ({ ...prev, [n]: e.target.value }))}
+                        className="flex-1 text-xs"
+                      />
+                      <Button variant="outline" size="sm" onClick={() => saveCottageUrl(n)}>შენახვა</Button>
+                    </div>
+                    {cottageUrls[n]?.last_synced_at && (
                       <span className="text-xs text-muted-foreground">
-                        ბოლო სინქრონიზაცია: {new Date(lastSynced).toLocaleString("ka-GE")}
+                        ბოლო სინქრონიზაცია: {new Date(cottageUrls[n].last_synced_at!).toLocaleString("ka-GE")}
                       </span>
                     )}
+                  </div>
+                ))}
+                {hasAnyUrl && (
+                  <div className="pt-2">
+                    <Button size="sm" onClick={handleSync} disabled={syncing}>
+                      <RefreshCw size={14} className={syncing ? "animate-spin" : ""} />
+                      {syncing ? "სინქრონიზაცია..." : "სინქრონიზაცია ყველა კოტეჯისთვის"}
+                    </Button>
                   </div>
                 )}
               </CardContent>

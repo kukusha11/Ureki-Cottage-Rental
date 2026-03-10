@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      booking_com_cottage_urls: {
+        Row: {
+          cottage_number: number
+          ical_url: string
+          id: string
+          last_synced_at: string | null
+        }
+        Insert: {
+          cottage_number: number
+          ical_url?: string
+          id?: string
+          last_synced_at?: string | null
+        }
+        Update: {
+          cottage_number?: number
+          ical_url?: string
+          id?: string
+          last_synced_at?: string | null
+        }
+        Relationships: []
+      }
       booking_com_settings: {
         Row: {
           created_at: string
