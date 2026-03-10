@@ -68,7 +68,7 @@ const Admin = () => {
       setAuthenticated(true);
       sessionStorage.setItem("admin_auth", "true");
     } else {
-      toast({ title: "Wrong password", variant: "destructive" });
+      toast({ title: "არასწორი პაროლი", variant: "destructive" });
     }
   };
 
@@ -84,7 +84,7 @@ const Admin = () => {
       .select("*")
       .order("check_in", { ascending: true });
     if (error) {
-      toast({ title: "Error loading reservations", description: error.message, variant: "destructive" });
+      toast({ title: "რეზერვაციების ჩატვირთვის შეცდომა", description: error.message, variant: "destructive" });
     } else {
       setReservations((data as unknown as Reservation[]) || []);
     }
@@ -106,7 +106,7 @@ const Admin = () => {
 
   const saveBookingComUrl = async () => {
     if (!bookingComUrl.trim()) {
-      toast({ title: "Please enter a URL", variant: "destructive" });
+      toast({ title: "გთხოვთ შეიყვანოთ URL", variant: "destructive" });
       return;
     }
 
@@ -129,10 +129,10 @@ const Admin = () => {
     }
 
     if (error) {
-      toast({ title: "Error saving URL", description: error.message, variant: "destructive" });
+      toast({ title: "URL-ის შენახვის შეცდომა", description: error.message, variant: "destructive" });
     } else {
       setSavedBookingComUrl(bookingComUrl.trim());
-      toast({ title: "Booking.com URL saved!" });
+      toast({ title: "Booking.com URL შენახულია!" });
     }
   };
 
@@ -143,13 +143,13 @@ const Admin = () => {
       if (res.error) throw res.error;
       const result = res.data;
       toast({
-        title: "Sync complete!",
-        description: `${result.imported} new, ${result.updated} updated, ${result.total} total events`,
+        title: "სინქრონიზაცია დასრულდა!",
+        description: `${result.imported} ახალი, ${result.updated} განახლებული, ${result.total} სულ`,
       });
       fetchReservations();
       fetchBookingComSettings();
     } catch (err: any) {
-      toast({ title: "Sync failed", description: err.message, variant: "destructive" });
+      toast({ title: "სინქრონიზაცია ვერ მოხერხდა", description: err.message, variant: "destructive" });
     }
     setSyncing(false);
   };
@@ -178,7 +178,7 @@ const Admin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!guestName || !checkIn || !checkOut) {
-      toast({ title: "Please fill in required fields", variant: "destructive" });
+      toast({ title: "გთხოვთ შეავსოთ სავალდებულო ველები", variant: "destructive" });
       return;
     }
 
@@ -200,9 +200,9 @@ const Admin = () => {
     }
 
     if (error) {
-      toast({ title: "Error saving reservation", description: error.message, variant: "destructive" });
+      toast({ title: "რეზერვაციის შენახვის შეცდომა", description: error.message, variant: "destructive" });
     } else {
-      toast({ title: editingId ? "Reservation updated" : "Reservation added" });
+      toast({ title: editingId ? "რეზერვაცია განახლდა" : "რეზერვაცია დამატებულია" });
       resetForm();
       setDialogOpen(false);
       fetchReservations();
@@ -210,12 +210,12 @@ const Admin = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Delete this reservation?")) return;
+    if (!confirm("წაშალოთ ეს რეზერვაცია?")) return;
     const { error } = await supabase.from("reservations").delete().eq("id", id);
     if (error) {
-      toast({ title: "Error deleting", description: error.message, variant: "destructive" });
+      toast({ title: "წაშლის შეცდომა", description: error.message, variant: "destructive" });
     } else {
-      toast({ title: "Reservation deleted" });
+      toast({ title: "რეზერვაცია წაშლილია" });
       fetchReservations();
     }
   };
@@ -230,9 +230,9 @@ const Admin = () => {
   const statusBadge = (checkIn: string, checkOut: string) => {
     const status = getStatus(checkIn, checkOut);
     const variants: Record<string, { label: string; className: string }> = {
-      past: { label: "Past", className: "bg-muted text-muted-foreground" },
-      current: { label: "Now", className: "bg-green-500 text-white" },
-      upcoming: { label: "Upcoming", className: "bg-primary text-primary-foreground" },
+      past: { label: "გასული", className: "bg-muted text-muted-foreground" },
+      current: { label: "ახლა", className: "bg-green-500 text-white" },
+      upcoming: { label: "მომავალი", className: "bg-primary text-primary-foreground" },
     };
     const v = variants[status];
     return <Badge className={v.className}>{v.label}</Badge>;
@@ -242,12 +242,12 @@ const Admin = () => {
     if (source === "booking_com") {
       return <Badge variant="outline" className="text-xs gap-1"><Globe size={10} />Booking</Badge>;
     }
-    return <Badge variant="outline" className="text-xs gap-1"><Phone size={10} />Manual</Badge>;
+    return <Badge variant="outline" className="text-xs gap-1"><Phone size={10} />ხელით</Badge>;
   };
 
   const unassignedBadge = (cottageNumber: number) => {
     if (cottageNumber === 0) {
-      return <Badge className="bg-amber-500 text-white text-xs animate-pulse">Assign!</Badge>;
+      return <Badge className="bg-amber-500 text-white text-xs animate-pulse">მიანიჭე!</Badge>;
     }
     return <>#{cottageNumber}</>;
   };
@@ -262,20 +262,20 @@ const Admin = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calendar className="text-primary" size={24} />
-              Admin Login
+              ადმინისტრატორი
             </CardTitle>
-            <CardDescription>Enter password to manage reservations</CardDescription>
+            <CardDescription>შეიყვანეთ პაროლი რეზერვაციების სამართავად</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
               <Input
                 type="password"
-                placeholder="Password"
+                placeholder="პაროლი"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoFocus
               />
-              <Button type="submit" className="w-full">Login</Button>
+              <Button type="submit" className="w-full">შესვლა</Button>
             </form>
           </CardContent>
         </Card>
@@ -290,9 +290,9 @@ const Admin = () => {
         <div className="container mx-auto px-4 flex items-center justify-between h-16">
           <h1 className="text-xl font-bold text-foreground flex items-center gap-2">
             <Calendar className="text-primary" size={24} />
-            Reservations
+            რეზერვაციები
             {unassignedCount > 0 && (
-              <Badge className="bg-amber-500 text-white">{unassignedCount} unassigned</Badge>
+              <Badge className="bg-amber-500 text-white">{unassignedCount} გაუნაწილებელი</Badge>
             )}
           </h1>
           <div className="flex items-center gap-2">
@@ -303,51 +303,51 @@ const Admin = () => {
               <DialogTrigger asChild>
                 <Button size="sm">
                   <Plus size={16} />
-                  Add
+                  დამატება
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-md">
                 <DialogHeader>
-                  <DialogTitle>{editingId ? "Edit Reservation" : "New Reservation"}</DialogTitle>
+                  <DialogTitle>{editingId ? "რეზერვაციის რედაქტირება" : "ახალი რეზერვაცია"}</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <Label htmlFor="guestName">Guest Name *</Label>
+                    <Label htmlFor="guestName">სტუმრის სახელი *</Label>
                     <Input id="guestName" value={guestName} onChange={(e) => setGuestName(e.target.value)} required />
                   </div>
                   <div>
-                    <Label htmlFor="guestPhone">Phone</Label>
+                    <Label htmlFor="guestPhone">ტელეფონი</Label>
                     <Input id="guestPhone" value={guestPhone} onChange={(e) => setGuestPhone(e.target.value)} />
                   </div>
                   <div>
-                    <Label htmlFor="cottage">Cottage #</Label>
+                    <Label htmlFor="cottage">კოტეჯი #</Label>
                     <Select value={cottageNumber} onValueChange={setCottageNumber}>
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="0">Unassigned</SelectItem>
+                        <SelectItem value="0">გაუნაწილებელი</SelectItem>
                         {[1, 2, 3, 4, 5, 6, 7].map((n) => (
-                          <SelectItem key={n} value={String(n)}>Cottage {n}</SelectItem>
+                          <SelectItem key={n} value={String(n)}>კოტეჯი {n}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <Label htmlFor="checkIn">Check-in *</Label>
+                      <Label htmlFor="checkIn">დაბინავება *</Label>
                       <Input id="checkIn" type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} required />
                     </div>
                     <div>
-                      <Label htmlFor="checkOut">Check-out *</Label>
+                      <Label htmlFor="checkOut">გამობინავება *</Label>
                       <Input id="checkOut" type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} required />
                     </div>
                   </div>
                   <div>
-                    <Label htmlFor="notes">Notes</Label>
-                    <Textarea id="notes" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Optional notes..." rows={2} />
+                    <Label htmlFor="notes">შენიშვნები</Label>
+                    <Textarea id="notes" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="არასავალდებულო შენიშვნები..." rows={2} />
                   </div>
-                  <Button type="submit" className="w-full">{editingId ? "Update" : "Add Reservation"}</Button>
+                  <Button type="submit" className="w-full">{editingId ? "განახლება" : "რეზერვაციის დამატება"}</Button>
                 </form>
               </DialogContent>
             </Dialog>
@@ -367,9 +367,9 @@ const Admin = () => {
               <CardHeader className="pb-3">
                 <CardTitle className="text-base flex items-center gap-2">
                   <Globe size={16} className="text-primary" />
-                  Booking.com Import
+                   Booking.com იმპორტი
                 </CardTitle>
-                <CardDescription>Paste the iCal URL from Booking.com to import reservations</CardDescription>
+                <CardDescription>ჩასვით iCal URL Booking.com-დან რეზერვაციების იმპორტისთვის</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex gap-2">
@@ -379,17 +379,17 @@ const Admin = () => {
                     onChange={(e) => setBookingComUrl(e.target.value)}
                     className="flex-1"
                   />
-                  <Button variant="outline" size="sm" onClick={saveBookingComUrl}>Save</Button>
+                  <Button variant="outline" size="sm" onClick={saveBookingComUrl}>შენახვა</Button>
                 </div>
                 {savedBookingComUrl && (
                   <div className="flex items-center gap-2">
                     <Button size="sm" onClick={handleSync} disabled={syncing}>
                       <RefreshCw size={14} className={syncing ? "animate-spin" : ""} />
-                      {syncing ? "Syncing..." : "Sync Now"}
+                      {syncing ? "სინქრონიზაცია..." : "სინქრონიზაცია"}
                     </Button>
                     {lastSynced && (
                       <span className="text-xs text-muted-foreground">
-                        Last synced: {new Date(lastSynced).toLocaleString()}
+                        ბოლო სინქრონიზაცია: {new Date(lastSynced).toLocaleString("ka-GE")}
                       </span>
                     )}
                   </div>
@@ -402,10 +402,10 @@ const Admin = () => {
               <CardHeader className="pb-3">
                 <CardTitle className="text-base flex items-center gap-2">
                   <Calendar size={16} className="text-primary" />
-                  iCal Export (→ Booking.com)
+                   iCal ექსპორტი (→ Booking.com)
                 </CardTitle>
                 <CardDescription>
-                  In Booking.com, go to each room → Calendar → Sync calendars → "Add a calendar connection" → paste the matching cottage URL below.
+                  Booking.com-ში გადადით თითოეულ ოთახზე → კალენდარი → კალენდრების სინქრონიზაცია → „კალენდრის კავშირის დამატება" → ჩასვით შესაბამისი კოტეჯის URL ქვემოდან.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
@@ -413,17 +413,17 @@ const Admin = () => {
                   const url = `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID || 'fhbytiijiiprnhfnlqcj'}.supabase.co/functions/v1/ical-feed?cottage=${n}`;
                   return (
                     <div key={n} className="flex items-center gap-2">
-                      <span className="text-sm font-medium w-20 shrink-0">Cottage {n}</span>
+                      <span className="text-sm font-medium w-20 shrink-0">კოტეჯი {n}</span>
                       <Input readOnly value={url} className="flex-1 text-xs" />
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => {
                           navigator.clipboard.writeText(url);
-                          toast({ title: `Cottage ${n} URL copied!` });
+                          toast({ title: `კოტეჯი ${n} URL კოპირებულია!` });
                         }}
                       >
-                        Copy
+                        კოპირება
                       </Button>
                     </div>
                   );
@@ -437,24 +437,24 @@ const Admin = () => {
         <Card>
           <CardContent className="p-0">
             {loading ? (
-              <div className="p-8 text-center text-muted-foreground">Loading...</div>
+              <div className="p-8 text-center text-muted-foreground">იტვირთება...</div>
             ) : reservations.length === 0 ? (
               <div className="p-8 text-center text-muted-foreground">
-                No reservations yet. Click "Add" to create your first one.
+                რეზერვაციები ჯერ არ არის. დააჭირეთ „დამატება"-ს პირველის შესაქმნელად.
               </div>
             ) : (
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Source</TableHead>
-                      <TableHead>Guest</TableHead>
-                      <TableHead>Cottage</TableHead>
-                      <TableHead>Check-in</TableHead>
-                      <TableHead>Check-out</TableHead>
-                      <TableHead>Phone</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
+                      <TableHead>სტატუსი</TableHead>
+                      <TableHead>წყარო</TableHead>
+                      <TableHead>სტუმარი</TableHead>
+                      <TableHead>კოტეჯი</TableHead>
+                      <TableHead>დაბინავება</TableHead>
+                      <TableHead>გამობინავება</TableHead>
+                      <TableHead>ტელეფონი</TableHead>
+                      <TableHead className="text-right">მოქმედებები</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
