@@ -308,7 +308,7 @@ const Admin = () => {
               </DialogTrigger>
               <DialogContent className="max-w-md">
                 <DialogHeader>
-                  <DialogTitle>{editingId ? "Edit Reservation" : "New Reservation"}</DialogTitle>
+                  <DialogTitle>{editingId ? "რეზერვაციის რედაქტირება" : "ახალი რეზერვაცია"}</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
