@@ -200,9 +200,9 @@ const Admin = () => {
     }
 
     if (error) {
-      toast({ title: "Error saving reservation", description: error.message, variant: "destructive" });
+      toast({ title: "რეზერვაციის შენახვის შეცდომა", description: error.message, variant: "destructive" });
     } else {
-      toast({ title: editingId ? "Reservation updated" : "Reservation added" });
+      toast({ title: editingId ? "რეზერვაცია განახლდა" : "რეზერვაცია დამატებულია" });
       resetForm();
       setDialogOpen(false);
       fetchReservations();
