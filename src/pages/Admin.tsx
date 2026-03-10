@@ -312,7 +312,7 @@ const Admin = () => {
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <Label htmlFor="guestName">Guest Name *</Label>
+                    <Label htmlFor="guestName">სტუმრის სახელი *</Label>
                     <Input id="guestName" value={guestName} onChange={(e) => setGuestName(e.target.value)} required />
                   </div>
                   <div>
