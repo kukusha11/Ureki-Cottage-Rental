@@ -437,10 +437,10 @@ const Admin = () => {
         <Card>
           <CardContent className="p-0">
             {loading ? (
-              <div className="p-8 text-center text-muted-foreground">Loading...</div>
+              <div className="p-8 text-center text-muted-foreground">იტვირთება...</div>
             ) : reservations.length === 0 ? (
               <div className="p-8 text-center text-muted-foreground">
-                No reservations yet. Click "Add" to create your first one.
+                რეზერვაციები ჯერ არ არის. დააჭირეთ „დამატება"-ს პირველის შესაქმნელად.
               </div>
             ) : (
               <div className="overflow-x-auto">
