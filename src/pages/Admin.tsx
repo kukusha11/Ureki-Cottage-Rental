@@ -447,14 +447,14 @@ const Admin = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Source</TableHead>
-                      <TableHead>Guest</TableHead>
-                      <TableHead>Cottage</TableHead>
-                      <TableHead>Check-in</TableHead>
-                      <TableHead>Check-out</TableHead>
-                      <TableHead>Phone</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
+                      <TableHead>სტატუსი</TableHead>
+                      <TableHead>წყარო</TableHead>
+                      <TableHead>სტუმარი</TableHead>
+                      <TableHead>კოტეჯი</TableHead>
+                      <TableHead>დაბინავება</TableHead>
+                      <TableHead>გამობინავება</TableHead>
+                      <TableHead>ტელეფონი</TableHead>
+                      <TableHead className="text-right">მოქმედებები</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
