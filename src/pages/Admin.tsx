@@ -355,36 +355,41 @@ const Admin = () => {
         {/* Settings Panel */}
         {showSettings && (
           <div className="space-y-4">
-            {/* Booking.com Import URL */}
+            {/* Booking.com Import URLs — per cottage */}
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-base flex items-center gap-2">
                   <Globe size={16} className="text-primary" />
                    Booking.com იმპორტი
                 </CardTitle>
-                <CardDescription>ჩასვით iCal URL Booking.com-დან რეზერვაციების იმპორტისთვის</CardDescription>
+                <CardDescription>ჩასვით თითოეული კოტეჯის iCal URL Booking.com-დან</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="flex gap-2">
-                  <Input
-                    placeholder="https://admin.booking.com/..."
-                    value={bookingComUrl}
-                    onChange={(e) => setBookingComUrl(e.target.value)}
-                    className="flex-1"
-                  />
-                  <Button variant="outline" size="sm" onClick={saveBookingComUrl}>შენახვა</Button>
-                </div>
-                {savedBookingComUrl && (
-                  <div className="flex items-center gap-2">
-                    <Button size="sm" onClick={handleSync} disabled={syncing}>
-                      <RefreshCw size={14} className={syncing ? "animate-spin" : ""} />
-                      {syncing ? "სინქრონიზაცია..." : "სინქრონიზაცია"}
-                    </Button>
-                    {lastSynced && (
+                {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+                  <div key={n} className="space-y-1">
+                    <Label className="text-xs font-medium">კოტეჯი {n}</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder={`კოტეჯი ${n} — Booking.com iCal URL`}
+                        value={cottageUrlInputs[n] || ""}
+                        onChange={(e) => setCottageUrlInputs((prev) => ({ ...prev, [n]: e.target.value }))}
+                        className="flex-1 text-xs"
+                      />
+                      <Button variant="outline" size="sm" onClick={() => saveCottageUrl(n)}>შენახვა</Button>
+                    </div>
+                    {cottageUrls[n]?.last_synced_at && (
                       <span className="text-xs text-muted-foreground">
-                        ბოლო სინქრონიზაცია: {new Date(lastSynced).toLocaleString("ka-GE")}
+                        ბოლო სინქრონიზაცია: {new Date(cottageUrls[n].last_synced_at!).toLocaleString("ka-GE")}
                       </span>
                     )}
+                  </div>
+                ))}
+                {hasAnyUrl && (
+                  <div className="pt-2">
+                    <Button size="sm" onClick={handleSync} disabled={syncing}>
+                      <RefreshCw size={14} className={syncing ? "animate-spin" : ""} />
+                      {syncing ? "სინქრონიზაცია..." : "სინქრონიზაცია ყველა კოტეჯისთვის"}
+                    </Button>
                   </div>
                 )}
               </CardContent>
